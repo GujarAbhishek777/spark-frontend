@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --spark-flame-from: #ff4458;
+    --spark-flame-via: #ff6b4a;
+    --spark-flame-to: #ff8e53;
+  }
+
+  body {
+    background-color: #0b0f19;
+    color: #f8fafc;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Spark Flame Gradient */
+.bg-spark-gradient {
+  background: linear-gradient(135deg, #ff4458 0%, #ff6b4a 50%, #ff8e53 100%);
+}
+
+.text-spark-gradient {
+  background: linear-gradient(135deg, #ff4458 0%, #ff6b4a 50%, #ff8e53 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-spark-gradient {
+  border-image: linear-gradient(135deg, #ff4458, #ff6b4a) 1;
+}
+
+/* Glassmorphism utility */
+.glass-nav {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 68, 88, 0.4);
+  box-shadow: 0 12px 30px -10px rgba(255, 68, 88, 0.25);
+}
+
+/* Tinder Card Swiping Animations */
+.card-swipe-like {
+  animation: swipeRight 0.4s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card-swipe-pass {
+  animation: swipeLeft 0.4s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes swipeRight {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200px) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes swipeLeft {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-200px) rotate(-20deg);
+    opacity: 0;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff4458;
+}
