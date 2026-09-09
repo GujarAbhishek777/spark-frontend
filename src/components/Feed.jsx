@@ -4,7 +4,6 @@ import { Flame, RefreshCw, Sparkles, AlertCircle } from "lucide-react";
 import axiosInstance from "../utils/axiosClient";
 import { addFeed, removeUserFromFeed } from "../store/feedSlice";
 import UserCard from "./UserCard";
-import { MOCK_USERS } from "../utils/constants";
 
 const Feed = ({ setToast }) => {
   const feed = useSelector((store) => store.feed);
@@ -15,18 +14,16 @@ const Feed = ({ setToast }) => {
   const getFeed = async () => {
     setLoading(true);
     try {
-      const res = await axiosInstance.get("/user/feed");
+      const res = await axiosInstance.get("/feed");
       const feedData = res.data?.data || res.data;
-      if (Array.isArray(feedData) && feedData.length > 0) {
+      if (Array.isArray(feedData)) {
         dispatch(addFeed(feedData));
       } else {
-        // Fallback to mock cards if backend has no other users yet
-        dispatch(addFeed(MOCK_USERS));
+        dispatch(addFeed([]));
       }
     } catch (err) {
-      console.log("Feed fetch notice:", err.message);
-      // Fallback mock cards for demonstration
-      dispatch(addFeed(MOCK_USERS));
+      console.log("Feed fetch error:", err.message);
+      dispatch(addFeed([]));
     } finally {
       setLoading(false);
     }
@@ -114,19 +111,13 @@ const Feed = ({ setToast }) => {
             </p>
           </div>
 
-          <div className="pt-2 flex flex-col gap-3">
+          <div className="pt-2">
             <button
               onClick={getFeed}
               className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold bg-spark-gradient text-white shadow-lg shadow-rose-500/25 hover:opacity-95 transition-all cursor-pointer"
             >
               <RefreshCw className="w-5 h-5" />
               Refresh Feed
-            </button>
-            <button
-              onClick={() => dispatch(addFeed(MOCK_USERS))}
-              className="w-full py-2.5 px-4 rounded-xl font-semibold bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors text-sm"
-            >
-              Load Demo Cards
             </button>
           </div>
         </div>
