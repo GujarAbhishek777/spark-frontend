@@ -9,4 +9,15 @@ const axiosInstance = axios.create({
   },
 });
 
+// Response interceptor to handle unauthenticated requests
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      console.warn("Unauthorized access - 401 received from backend");
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;

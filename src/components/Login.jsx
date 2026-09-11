@@ -33,28 +33,9 @@ const Login = ({ setToast }) => {
       }
       navigate("/feed");
     } catch (err) {
-      console.log("Login notice:", err);
+      console.log("Login error:", err);
       const errorMsg = err.response?.data?.message || err.response?.data || err.message || "Invalid credentials";
-      
-      // Fallback mock login if server returns error during demo
-      if (emailId && password) {
-        const mockUser = {
-          _id: "user_logged_in_me",
-          firstName: emailId.split("@")[0] || "SparkUser",
-          lastName: "Developer",
-          emailId: emailId,
-          photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
-          age: 25,
-          gender: "male",
-          about: "Passion for building high performance web applications!",
-          skills: ["React", "Node.js", "Express", "MongoDB"]
-        };
-        dispatch(addUser(mockUser));
-        if (setToast) setToast({ message: "Logged in successfully!", type: "success" });
-        navigate("/feed");
-      } else {
-        setError(typeof errorMsg === "string" ? errorMsg : "Invalid email or password");
-      }
+      setError(typeof errorMsg === "string" ? errorMsg : "Invalid email or password");
     } finally {
       setLoading(false);
     }

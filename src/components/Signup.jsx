@@ -43,28 +43,9 @@ const Signup = ({ setToast }) => {
       }
       navigate("/profile");
     } catch (err) {
-      console.log("Signup notice:", err);
+      console.log("Signup error:", err);
       const errorMsg = err.response?.data?.message || err.response?.data || err.message || "Signup failed";
-      
-      // Fallback mock registration for smooth preview
-      if (firstName && emailId) {
-        const mockUser = {
-          _id: "user_newly_registered",
-          firstName,
-          lastName,
-          emailId,
-          photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
-          age: 22,
-          gender: "male",
-          about: "Excited to connect with awesome people on Spark!",
-          skills: ["React", "JavaScript"]
-        };
-        dispatch(addUser(mockUser));
-        if (setToast) setToast({ message: "Welcome to Spark! 🎉", type: "success" });
-        navigate("/profile");
-      } else {
-        setError(typeof errorMsg === "string" ? errorMsg : "Signup failed");
-      }
+      setError(typeof errorMsg === "string" ? errorMsg : "Signup failed");
     } finally {
       setLoading(false);
     }

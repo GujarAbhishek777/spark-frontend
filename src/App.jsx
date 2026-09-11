@@ -11,7 +11,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Toast from "./components/Toast";
 import axiosInstance from "./utils/axiosClient";
-import { addUser } from "./store/userSlice";
+import { addUser, removeUser } from "./store/userSlice";
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
@@ -46,9 +46,12 @@ const MainLayout = () => {
         const userData = res.data?.data || res.data;
         if (userData && userData.emailId) {
           dispatch(addUser(userData));
+        } else {
+          dispatch(removeUser());
         }
       } catch (err) {
         console.log("Session check notice:", err.message);
+        dispatch(removeUser());
       } finally {
         setInitializing(false);
       }
