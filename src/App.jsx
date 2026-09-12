@@ -13,7 +13,6 @@ import Toast from "./components/Toast";
 import axiosInstance from "./utils/axiosClient";
 import { addUser, removeUser } from "./store/userSlice";
 
-// Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
   const user = useSelector((store) => store.user);
   if (!user) {
@@ -22,7 +21,6 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-// Auth Route Wrapper (redirects logged-in users away from /login & /signup)
 const PublicAuthRoute = ({ children }) => {
   const user = useSelector((store) => store.user);
   if (user) {
@@ -31,14 +29,12 @@ const PublicAuthRoute = ({ children }) => {
   return children;
 };
 
-// Main App Container to handle initial session check & layout
 const MainLayout = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const [toast, setToast] = useState(null);
   const [initializing, setInitializing] = useState(true);
 
-  // Check if user has active session on initial load
   useEffect(() => {
     const fetchSession = async () => {
       try {
