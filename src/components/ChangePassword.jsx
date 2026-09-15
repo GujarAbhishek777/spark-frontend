@@ -26,7 +26,7 @@ const ChangePassword = ({ setToast }) => {
     setLoading(true);
 
     try {
-      await axiosInstance.patch("/profile/password", {
+      const res = await axiosInstance.patch("/profile/password", {
         existingPassword,
         newPassword,
       });
@@ -36,17 +36,12 @@ const ChangePassword = ({ setToast }) => {
       setConfirmPassword("");
 
       if (setToast) {
-        setToast({ message: "Password updated successfully! 🔒", type: "success" });
+        setToast({ message: res.data?.message || "Password updated successfully! 🔒", type: "success" });
       }
     } catch (err) {
-      console.log("Password update notice:", err.message);
-      // Fallback message for user
-      if (setToast) {
-        setToast({ message: "Password security update processed!", type: "success" });
-      }
-      setExistingPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+      console.log("Password update error:", err);
+      const errorMsg = err.response?.data?.message || err.response?.data || err.message || "Failed to update password";
+      setError(typeof errorMsg === "string" ? errorMsg : "Failed to update password");
     } finally {
       setLoading(false);
     }
